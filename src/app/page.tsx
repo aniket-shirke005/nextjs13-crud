@@ -2,15 +2,9 @@
 import React, { useState, useEffect } from 'react';
 import {addItemToDB,deleteItemFromDB,getDataFromDB,updateItemInDB} from "../services/crudServices"
 import {
-  collection,
-  addDoc,
-  getDoc,
-  querySnapshot,
+  collection,  
   query,
   onSnapshot,
-  deleteDoc,
-  doc,
-  updateDoc,
 } from 'firebase/firestore';
 import { db } from './firebase';
 
@@ -35,7 +29,9 @@ export default function Home() {
   };
 
   // Read items from database
-  const getData = ()=>{
+  
+  
+  useEffect(() => {
     const q = query(collection(db, 'items'));
     const unsubscribe = onSnapshot(q, (querySnapshot) => {
       let itemsArr = [];
@@ -56,10 +52,6 @@ export default function Home() {
       calculateTotal();
       return () => unsubscribe();
     });
-  }
-  
-  useEffect(() => {
-    getData()
   }, []);
 
   // Delete items from database
